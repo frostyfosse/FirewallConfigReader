@@ -1,0 +1,477 @@
+: Saved
+: 
+: Hardware:   ASA5525
+:
+ASA Version 9.5(2) <context>
+!
+terminal width 144
+hostname HCI-TP-FW1-CHS
+enable password zf3fSUIgtTmv.fcf encrypted
+names
+ip local pool chs_anyconnect_vpn_pool 192.168.192.0-192.168.192.254 mask 255.255.255.0
+!
+interface int0
+ nameif outside
+ security-level 0
+ ip address 104.153.172.24 255.255.255.192 standby 104.153.172.25 
+!
+interface int1
+ nameif inside
+ security-level 100
+ ip address 10.100.213.1 255.255.255.0 standby 10.100.213.2 
+!
+interface int2
+ nameif mgmtzone
+              
+ security-level 100
+ ip address 10.254.247.24 255.255.255.192 standby 10.254.247.25 
+!
+same-security-traffic permit inter-interface
+same-security-traffic permit intra-interface
+object network mgmtzone_LAN
+ subnet 10.254.240.0 255.255.240.0
+object network mgmtzone_servers
+ subnet 10.254.244.0 255.255.255.0
+object network mgmtzone_RA-VPN
+ subnet 10.254.255.0 255.255.255.0
+object network hps6dc1
+ host 10.254.244.25
+ description mgmtzone domain controller
+object network hps6term1
+ host 10.254.244.40
+ description mgmtzone terminal server
+object network hps6wsus1
+ host 10.254.244.30
+ description mgmtzone wsus server
+object network hpsorion1
+ host 10.254.244.20
+ description Orion Server Application Monitor (SAM)
+object service wsus
+              
+ service tcp destination eq 8530 
+object service rdp
+ service tcp destination eq 3389 
+object network inside_subnet
+ subnet 10.100.213.0 255.255.255.0
+object network mgmtzone_routing
+ subnet 10.254.247.0 255.255.255.0
+object network hps1swapp1
+ host 10.254.244.5
+ description Solarwinds server
+object service sflow
+ service udp destination eq 6343 
+object network anyconnect-ip-subnet
+ subnet 192.168.192.0 255.255.255.0
+ description anyconnect ip pool
+object network chs-local
+ subnet 10.100.213.0 255.255.255.0
+ description chs local lan
+object network CHS1ARCH1_int
+ host 10.100.213.30
+object network CHS1VAULT1_int
+ host 10.100.213.31
+object network CHS1REPO1_int
+ host 10.100.213.32
+              
+object network CHS1TOOLS1_int
+ host 10.100.213.35
+object network CHS2ARCH1_int
+ host 10.100.213.40
+object network CHS2VAULT1_int
+ host 10.100.213.41
+object network CHS2SQL1_int
+ host 10.100.213.44
+object network CHS2TOOLS1_int
+ host 10.100.213.45
+object network CHS1ARCH1_ext
+ host 104.153.173.123
+object network CHS1VAULT1_ext
+ host 104.153.173.121
+object network CHS1REPO1_ext
+ host 104.153.173.122
+object network CHS1TOOLS1_ext
+ host 104.153.173.120
+object network CHS2ARCH1_ext
+ host 104.153.173.124
+object network CHS2VAULT1_ext
+ host 104.153.173.125
+object network CHS2SQL1_ext
+ host 104.153.173.126
+              
+object network CHS2TOOLS1_ext
+ host 104.153.173.127
+object network DCR-CFMHP-MS-01
+ host 10.247.81.112
+object network DCR-RIMA-MS-01
+ host 10.246.24.139
+object network DCR-CWSC-MS-01
+ host 10.250.226.100
+object network FFM-HM-MS-01
+ host 10.247.82.138
+object network DCR-IDC-MS-01
+ host 10.246.2.57
+object network AHSDB01
+ host 172.16.4.219
+object network AHSDB02
+ host 172.16.4.220
+object network CNE-EMRW-MS-01
+ host 172.16.4.223
+object network CNE-EMRW-MS-02
+ host 172.16.4.225
+object network CNE-EMRW-MS-03
+ host 172.16.4.227
+object network CNE-EMRW-MS-04
+ host 172.16.4.229
+              
+object network AHSPRINT01
+ host 10.5.1.59
+object network AHSPRINT02
+ host 10.5.1.60
+object network AHSPRINT03
+ host 10.5.1.89
+object network AHSPRINT04
+ host 10.5.1.92
+object network AHSPRINT05
+ host 10.5.1.93
+object network AHSSCAN01
+ host 172.16.4.217
+object network AHSDICTINT01
+ host 172.16.4.218
+object network CHS_LAPTOP_1
+ subnet 10.251.0.0 255.255.0.0
+object network CHS_LDAP_001
+ host 10.247.82.119
+object network CHS_LDAP_002
+ host 10.250.162.143
+object network CHS_LDAP_003
+ host 10.250.162.202
+object network CHS_LDAP_004
+ host 10.250.162.132
+              
+object network CHS_LDAP_005
+ host 10.250.162.206
+object network APP_SERVER_001
+ host 10.250.253.131
+object network APP_SERVER_002
+ host 10.250.254.131
+object network firewall_ip
+ host 104.153.172.24
+object network _10_network
+ subnet 10.0.0.0 255.0.0.0
+object network _172_network
+ subnet 172.16.0.0 255.240.0.0
+object network IDC_server_1
+ host 10.246.2.57
+object network IDC_server_2
+ host 10.169.112.169
+object network NPN_server1
+ host 172.16.4.222
+object network NPN_server2
+ host 172.16.4.217
+object network MeditechNE_server2
+ host 172.16.1.27
+object network test_sql_chs
+ host 10.250.56.17
+              
+object network Meditecha
+ host 10.5.1.145
+object network Meditechb
+ host 10.5.1.146
+object network Meditechc
+ host 10.5.1.147
+object network MAGIC-A
+ host 10.247.88.107
+object network MAGIC-B
+ host 10.247.88.108
+object network MeditechWorkstation
+ host 10.251.97.96
+object network DCR-NS-Cx-02
+ host 10.246.11.34
+object service saltstack
+ service tcp destination range 4505 4506 
+object network CHS2REPO1_int
+ host 10.100.213.42
+object network austin_pc
+ host 10.144.61.32
+object network scott_pc
+ host 10.251.96.22
+object-group network rfc1918
+ network-object 10.0.0.0 255.0.0.0
+              
+ network-object 172.16.0.0 255.240.0.0
+ network-object 192.168.0.0 255.255.0.0
+object-group network mgmtzone_wmi_servers
+ description servers in mgmtzone allowed to perform wmi querries
+ network-object object hps6dc1
+ network-object object hps6term1
+ network-object object hps6wsus1
+ network-object object hpsorion1
+ network-object object hps1swapp1
+object-group service wmi
+ service-object tcp destination eq 135 
+ service-object tcp destination range 1024 65535 
+ service-object tcp destination eq 1433 
+ service-object tcp destination eq 1434 
+ service-object tcp destination eq 8530 
+object-group service client_to_mgmtzone_services
+ description client to mgmtzone allowed services
+ service-object object wsus 
+ service-object icmp 
+ service-object tcp-udp destination eq tacacs 
+ service-object udp destination eq syslog 
+ service-object udp destination eq snmp 
+ service-object udp destination eq snmptrap 
+ service-object udp destination eq domain 
+              
+ service-object udp destination eq tftp 
+ service-object object sflow 
+ service-object object saltstack 
+object-group service mgmtzone_to_client_services
+ description mgmtzone to client allowed services
+ service-object object rdp 
+ service-object object wsus 
+ service-object icmp 
+ service-object tcp-udp destination eq domain 
+ service-object tcp destination eq www 
+ service-object tcp destination eq https 
+ service-object tcp destination eq ssh 
+ service-object tcp destination eq telnet 
+ service-object tcp destination eq ldap 
+ service-object tcp destination eq smtp 
+ service-object udp destination eq snmp 
+ service-object udp destination eq snmptrap 
+ service-object udp destination eq tftp 
+ service-object tcp-udp destination eq tacacs 
+ service-object object saltstack 
+object-group service TCP-Common_Internet_Services tcp
+ description TCP-only Protocols allowed out to the Internet by internal users
+ port-object eq domain
+ port-object eq echo
+              
+ port-object eq ftp
+ port-object eq ftp-data
+ port-object eq www
+ port-object eq https
+ port-object eq ldap
+ port-object eq ssh
+ port-object range 3000 3003
+ port-object range 3007 3007
+ port-object range 5800 5800
+ port-object range 5900 5900
+ port-object range 7000 7003
+ port-object range 8800 8800
+ port-object range 5000 5003
+ port-object range 1433 1433
+ port-object range 9999 9999
+ port-object range 42 42
+ port-object range 14996 14998
+ port-object eq 9091
+object-group service UDP-Common_Internet_Services udp
+ description UDP-only Protocols allowed out to the Internet by internal users
+ port-object eq bootpc
+ port-object eq bootps
+ port-object eq domain
+ port-object eq echo
+              
+ port-object eq isakmp
+ port-object eq ntp
+ port-object eq time
+ port-object range 10000 10000
+ port-object range 4500 4500
+ port-object range 3005 3005
+ port-object range 5000 5003
+ port-object range 1433 1433
+ port-object eq syslog
+ port-object range nameserver nameserver
+ port-object eq 9091
+object-group protocol IP-Common_Internet_Services
+ description IP Protocols allowed out to the Internet by internal users
+ protocol-object gre
+ protocol-object esp
+ protocol-object ah
+object-group network mgmtzone_network_monitor_servers
+ description servers in mgmtzone allowed to perform full APM queries
+ network-object object hps1swapp1
+object-group network Mimecasts-SEG-list
+ network-object 207.211.30.0 255.255.255.0
+ network-object 207.211.31.0 255.255.255.128
+ network-object 205.139.110.0 255.255.254.0
+object-group icmp-type AllowedICMP
+              
+ icmp-object echo
+ icmp-object echo-reply
+ icmp-object mask-reply
+ icmp-object redirect
+ icmp-object time-exceeded
+ icmp-object timestamp-reply
+ icmp-object traceroute
+ icmp-object unreachable
+object-group service network_monitoring
+ description minimum list of Application Performance Monitoring (APM) ports necessary for Solarwinds
+ service-object tcp destination eq 135 
+ service-object tcp destination eq netbios-ssn 
+ service-object tcp destination eq 445 
+ service-object udp destination eq netbios-ns 
+ service-object udp destination eq netbios-dgm 
+ service-object tcp destination range 1024 65535 
+ service-object tcp destination eq 1433 
+ service-object tcp destination eq 1434 
+ service-object object sflow 
+ service-object tcp-udp destination eq 2055 
+object-group service vcenter_client
+ description VMWare VCenter Client ports
+ service-object tcp destination eq ssh 
+ service-object tcp destination eq www 
+              
+ service-object tcp destination eq https 
+ service-object udp destination eq 427 
+ service-object tcp-udp destination eq 902 
+ service-object tcp destination eq 5480 
+ service-object tcp destination eq 9084 
+ service-object tcp destination eq 9443 
+ service-object tcp destination eq 10443 
+object-group network HPS_CHS_SERVERS_ext
+ network-object object CHS1VAULT1_ext
+ network-object object CHS1REPO1_ext
+ network-object object CHS2ARCH1_ext
+ network-object object CHS2VAULT1_ext
+ network-object object CHS2SQL1_ext
+ network-object object CHS2TOOLS1_ext
+ network-object object CHS1ARCH1_ext
+ network-object object CHS1TOOLS1_ext
+object-group network REMOTE_CHS_SUBNET
+ description Caroline Health Services Remote Subnet
+ network-object object DCR-CFMHP-MS-01
+ network-object object DCR-RIMA-MS-01
+ network-object object DCR-CWSC-MS-01
+ network-object object FFM-HM-MS-01
+ network-object object DCR-IDC-MS-01
+ network-object object AHSDB01
+              
+ network-object object AHSDB02
+ network-object object CNE-EMRW-MS-01
+ network-object object CNE-EMRW-MS-02
+ network-object object CNE-EMRW-MS-03
+ network-object object CNE-EMRW-MS-04
+ network-object object AHSPRINT01
+ network-object object AHSPRINT02
+ network-object object AHSPRINT03
+ network-object object AHSPRINT04
+ network-object object AHSPRINT05
+ network-object object AHSSCAN01
+ network-object object AHSDICTINT01
+ network-object object CHS_LDAP_001
+ network-object object CHS_LDAP_004
+ network-object object CHS_LDAP_002
+ network-object object CHS_LDAP_005
+ network-object object CHS_LDAP_003
+ network-object object APP_SERVER_001
+ network-object object APP_SERVER_002
+ network-object object CHS_LAPTOP_1
+ network-object object IDC_server_1
+ network-object object NPN_server1
+ network-object object MeditechNE_server2
+ network-object object IDC_server_2
+              
+ network-object object NPN_server2
+ network-object object test_sql_chs
+ network-object object Meditecha
+ network-object object Meditechb
+ network-object object Meditechc
+ network-object object MAGIC-A
+ network-object object MAGIC-B
+ network-object object MeditechWorkstation
+ network-object object DCR-NS-Cx-02
+ network-object host 10.250.204.240
+ network-object object austin_pc
+ network-object object _10_network
+ network-object object _172_network
+ network-object object scott_pc
+object-group network HPS_CHS_SERVERS_int
+ network-object object CHS1ARCH1_int
+ network-object object CHS1VAULT1_int
+ network-object object CHS1REPO1_int
+ network-object object CHS1TOOLS1_int
+ network-object object CHS2ARCH1_int
+ network-object object CHS2VAULT1_int
+ network-object object CHS2TOOLS1_int
+ network-object object CHS2SQL1_int
+object-group network CHS_CRYPTO_DEBUG
+              
+ network-object host 10.104.10.105
+ network-object host 10.104.10.236
+ network-object host 10.104.10.237
+ network-object host 10.104.10.48
+ network-object host 10.13.240.96
+ network-object host 10.144.61.32
+ network-object host 10.169.112.169
+ network-object host 10.246.11.34
+ network-object host 10.246.2.57
+ network-object host 10.246.24.139
+ network-object host 10.247.81.112
+ network-object host 10.247.82.138
+ network-object host 10.247.82.166
+ network-object host 10.247.88.107
+ network-object host 10.247.88.108
+ network-object host 10.250.204.240
+ network-object host 10.250.226.100
+ network-object host 10.251.64.157
+ network-object host 10.251.96.22
+ network-object host 10.251.97.91
+ network-object host 10.5.1.145
+ network-object host 10.5.1.146
+ network-object host 10.5.1.147
+ network-object host 10.5.1.59
+              
+ network-object host 10.5.1.60
+ network-object host 10.5.1.89
+ network-object host 10.5.1.92
+ network-object host 10.5.1.93
+ network-object host 172.16.1.27
+ network-object host 172.16.4.217
+ network-object host 172.16.4.218
+ network-object host 172.16.4.219
+ network-object host 172.16.4.220
+ network-object host 172.16.4.222
+ network-object host 172.16.4.223
+ network-object host 172.16.4.225
+ network-object host 172.16.4.227
+ network-object host 172.16.4.229
+access-list mgmtzone_access_in extended permit object-group mgmtzone_to_client_services object mgmtzone_servers any 
+access-list mgmtzone_access_in extended permit object-group mgmtzone_to_client_services object mgmtzone_routing any 
+access-list mgmtzone_access_in extended permit object-group network_monitoring object-group mgmtzone_network_monitor_servers any 
+access-list mgmtzone_access_in extended permit object-group vcenter_client object hps6term1 any 
+access-list mgmtzone_access_in extended permit object-group wmi object-group mgmtzone_wmi_servers any 
+access-list mgmtzone_access_in extended permit icmp object mgmtzone_LAN any 
+access-list mgmtzone_access_in extended deny ip any object-group rfc1918 
+access-list inside_access_in extended permit ip object inside_subnet object-group CHS_CRYPTO_DEBUG 
+access-list inside_access_in extended permit object-group client_to_mgmtzone_services any object mgmtzone_servers 
+access-list inside_access_in extended permit icmp object inside_subnet object-group REMOTE_CHS_SUBNET 
+              
+access-list inside_access_in extended permit ip object inside_subnet object-group REMOTE_CHS_SUBNET 
+access-list inside_access_in extended permit icmp any any object-group AllowedICMP 
+access-list inside_access_in extended permit icmp any object mgmtzone_LAN 
+access-list inside_access_in extended deny ip any object mgmtzone_LAN 
+access-list inside_access_in remark Permit inside users to access the Internet (IP-protocols)
+access-list inside_access_in extended permit object-group IP-Common_Internet_Services any any 
+access-list inside_access_in remark Permit inside users to access the Internet (UDP-only services)
+access-list inside_access_in extended permit udp any any object-group UDP-Common_Internet_Services 
+access-list inside_access_in remark Permit inside users to access the Internet (TCP-only services)
+access-list inside_access_in extended permit tcp any any object-group TCP-Common_Internet_Services 
+access-list inside_access_in remark Permit PING-Traceroute to the Internet
+access-list inside_access_in extended permit ip any any 
+access-list inside_access_in extended permit tcp object inside_subnet object-group Mimecasts-SEG-list eq smtp 
+access-list inside_access_in extended deny ip any object-group rfc1918 
+access-list outside_access_in remark Permit ICMP-replies
+access-list outside_access_in extended permit icmp any any object-group AllowedICMP 
+access-list outside_ips extended permit ip any any 
+access-list chs_split_tunnel remark CHS Internal subnet
+access-list chs_split_tunnel standard permit 10.100.213.0 255.255.255.0 
+access-list chs_split_tunnel standard permit 10.250.56.0 255.255.255.0 
+access-list CHS_L2L_VPN_ACL extended permit ip object-group HPS_CHS_SERVERS_ext object _10_network 
+access-list CHS_L2L_VPN_ACL extended permit ip object-group HPS_CHS_SERVERS_ext object _172_network 
+access-list test_laptop extended permit ip host 10.100.213.30 host 10.251.96.22 
+access-list test_laptop extended permit ip host 10.251.96.22 host 10.100.213.30 
+              
+access-list chs_cryptomap_debug extended permit ip object-group HPS_CHS_SERVERS_ext object-group CHS_CRYPTO_DEBUG 
+pager lines 24

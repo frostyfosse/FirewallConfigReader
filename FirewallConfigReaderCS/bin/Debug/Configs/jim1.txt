@@ -1,0 +1,220 @@
+: Saved
+: 
+: Serial Number: FCH1812K5UV
+: Hardware:   ASA5512, 4096 MB RAM, CPU Clarkdale 2792 MHz, 1 CPU (2 cores)
+:
+ASA Version 9.1(7) 
+!
+terminal width 132
+hostname ALK-TP-ASA1
+enable password zf3fSUIgtTmv.fcf encrypted
+names
+ip local pool RA-POOL 172.16.50.1-172.16.50.254 mask 255.255.255.0
+!
+interface GigabitEthernet0/0
+ speed 100
+ duplex full
+ nameif outside
+ security-level 0
+ ip address 68.168.91.13 255.255.255.192 
+!
+interface GigabitEthernet0/1
+ nameif transport
+ security-level 100
+ ip address 192.168.60.1 255.255.255.0 standby 192.168.60.2 
+!
+interface GigabitEthernet0/2
+ nameif mgmtzone
+ security-level 100
+ ip address 10.254.247.48 255.255.255.192 standby 10.254.247.49 
+!
+interface GigabitEthernet0/3
+ nameif iscsi
+ security-level 100
+ ip address 172.16.60.1 255.255.255.0 standby 172.16.60.2 
+!
+interface GigabitEthernet0/4
+ nameif backup
+ security-level 100
+ ip address 172.16.250.3 255.255.255.0 
+!
+interface GigabitEthernet0/5
+ description LAN/STATE Failover Interface
+!
+interface Management0/0
+ management-only
+ shutdown
+ nameif management
+ security-level 100
+ ip address 192.168.1.1 255.255.255.0 
+!
+boot system disk0:/asa917-smp-k8.bin
+ftp mode passive
+same-security-traffic permit inter-interface
+same-security-traffic permit intra-interface
+object network obj_any
+ subnet 0.0.0.0 0.0.0.0
+object network NETWORK_OBJ_172.16.50.0_24
+ subnet 172.16.50.0 255.255.255.0
+object network NETWORK_OBJ_192.168.60.0_24
+ subnet 192.168.60.0 255.255.255.0
+object network NETWORK_OBJ_172.16.60.0_24
+ subnet 172.16.60.0 255.255.255.0
+object network NETWORK_OBJ_172.16.14.0_24
+ subnet 172.16.14.0 255.255.255.0
+object network NETWORK_OBJ_10.0.0.0_8
+ subnet 10.0.0.0 255.0.0.0
+object network NETWORK_OBJ_10.0.0.0_16
+ subnet 10.0.0.0 255.255.0.0
+object network NETWORK_OBJ_10.68.0.0_16
+ subnet 10.68.0.0 255.255.0.0
+object network NETWORK_OBJ_10.1.0.0_16
+ subnet 10.1.0.0 255.255.0.0
+object network NETWORK_OBJ_10.2.0.0_16
+ subnet 10.2.0.0 255.255.0.0
+object network NETWORK_OBJ_10.210.0.0_16
+ subnet 10.210.0.0 255.255.0.0
+object network NETWORK_OBJ_10.3.0.0_16
+ subnet 10.3.0.0 255.255.0.0
+object network NETWORK_OBJ_10.8.0.0_16
+ subnet 10.8.0.0 255.255.0.0
+object network NETWORK_OBJ_10.64.0.0_12
+ subnet 10.64.0.0 255.240.0.0
+object network ALKFS1
+ host 172.16.14.34
+object network ALK_DR_DATA
+ subnet 172.112.11.0 255.255.255.0
+object network ALK_DR_ISCSI
+ subnet 172.112.13.0 255.255.255.0
+object network mgmtzone_LAN
+ subnet 10.254.240.0 255.255.240.0
+object network mgmtzone_servers
+ subnet 10.254.244.0 255.255.255.0
+object network mgmtzone_RA-VPN
+ subnet 10.254.255.0 255.255.255.0
+object network hps6dc1
+ host 10.254.244.25
+ description mgmtzone domain controller
+object network hps6term1
+ host 10.254.244.40
+ description mgmtzone terminal server
+object network hps6wsus1
+ host 10.254.244.30
+ description mgmtzone wsus server
+object network hpsorion1
+ host 10.254.244.20
+ description Orion Server Application Monitor (SAM)
+object service wsus
+ service tcp destination eq 8530 
+object service rdp
+ service tcp destination eq 3389 
+object network ALKMDMAPP1
+ host 172.16.14.42
+ description MDM-Application-Server
+object network ALKMDMDB1
+ host 172.16.14.43
+ description MDM-Database-Server
+object network ALKCDHAPP1
+ host 172.16.14.44
+ description CDH-Application-Server
+object network ALKCDHDB1
+ host 172.16.14.45
+ description CDH-Database-Server
+object network ALKETLAPP1
+ host 172.16.14.46
+ description ETL-Application-Server
+object network ALKETLDB1
+ host 172.16.14.47
+ description ETL-Database-Server
+object network ALK2MDMAPP1
+ host 172.16.14.62
+ description QA-MDM-Application-Server
+object network ALK2MDMDB1
+ host 172.16.14.63
+ description QA-MDM-Database-Server
+object network ALK2CDHAPP1
+ host 172.16.14.64
+ description QA-CDH-Application-Server
+object network ALK2CDHDB1
+ host 172.16.14.65
+ description QA-CDH-Database-Server
+object network ALK2ETLAPP1
+ host 172.16.14.66
+ description QA-ETL-Application-Server
+object network ALK2ETLDB1
+ host 172.16.14.67
+ description QA-ETL-Database-Server
+object network ALK3MDMAPP1
+ host 172.16.14.72
+ description Dev-MDM-Application-Server
+object network ALK3MDMDB1
+ host 172.16.14.73
+ description Dev-MDM-Database-Server
+object network ALK3CDHAPP1
+ host 172.16.14.74
+ description Dev-CDH-Application-Server
+object network ALK3CDHDB1
+ host 172.16.14.75
+ description Dev-CDH-Database-Server
+object network ALK3ETLAPP1
+ host 172.16.14.76
+ description Dev-ETL-Application-Server
+object network ALK3ETLDB1
+ host 172.16.14.77
+ description Dev-ETL-Database-Server
+object network ALK3TFS1
+ host 172.16.14.38
+object network hps1swapp1
+ host 10.254.244.5
+ description Solarwinds server
+object network mgmtzone_routing
+ subnet 10.254.247.0 255.255.255.0
+object service saltstack
+ service tcp destination range 4505 4506 
+object-group network rfc1918
+ network-object 10.0.0.0 255.0.0.0
+ network-object 172.16.0.0 255.240.0.0
+ network-object 192.168.0.0 255.255.0.0
+object-group network mgmtzone_wmi_servers
+ description servers in mgmtzone allowed to perform wmi querries
+ network-object object hps6dc1
+ network-object object hps6term1
+ network-object object hps6wsus1
+ network-object object hpsorion1
+ network-object object hps1swapp1
+object-group service wmi
+ service-object tcp destination eq 135 
+ service-object tcp destination range 1024 65535 
+ service-object tcp destination eq 1433 
+ service-object tcp destination eq 1434 
+object-group service client_to_mgmtzone_services
+ description client to mgmtzone allowed services
+ service-object object wsus 
+ service-object icmp 
+ service-object tcp-udp destination eq tacacs 
+ service-object udp destination eq syslog 
+ service-object udp destination eq tftp 
+ service-object udp destination eq snmp 
+ service-object udp destination eq snmptrap 
+ service-object udp destination eq domain 
+ service-object object saltstack 
+object-group service mgmtzone_to_client_services
+ description mgmtzone to client allowed services
+ service-object object rdp 
+ service-object object wsus 
+ service-object icmp 
+ service-object tcp-udp destination eq domain 
+ service-object tcp destination eq www 
+ service-object tcp destination eq https 
+ service-object tcp destination eq ssh 
+ service-object tcp destination eq telnet 
+ service-object tcp destination eq ldap 
+ service-object tcp destination eq smtp 
+ service-object udp destination eq snmp 
+ service-object udp destination eq snmptrap 
+ service-object tcp-udp destination eq tacacs 
+ service-object udp destination eq tftp 
+ service-object object saltstack 
+object-group network mgmtzone_network_monitor_servers
+ description servers in mgmtzone allowed to perform full APM queries
+ network-object object hps1swapp1

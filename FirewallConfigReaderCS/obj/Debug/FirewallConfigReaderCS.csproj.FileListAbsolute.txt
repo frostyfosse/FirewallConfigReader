@@ -1,0 +1,7 @@
+C:\Users\jfosse\Documents\FunScripts\FirewallConfigReaderCS\FirewallConfigReaderCS\FirewallConfigReaderCS\bin\Debug\FirewallConfigReaderCS.exe.config
+C:\Users\jfosse\Documents\FunScripts\FirewallConfigReaderCS\FirewallConfigReaderCS\bin\Debug\FirewallConfigReaderCS.exe.config
+C:\Users\jfosse\Documents\FunScripts\FirewallConfigReaderCS\FirewallConfigReaderCS\bin\Debug\FirewallConfigReaderCS.exe
+C:\Users\jfosse\Documents\FunScripts\FirewallConfigReaderCS\FirewallConfigReaderCS\bin\Debug\FirewallConfigReaderCS.pdb
+C:\Users\jfosse\Documents\FunScripts\FirewallConfigReaderCS\FirewallConfigReaderCS\obj\Debug\FirewallConfigReaderCS.exe
+C:\Users\jfosse\Documents\FunScripts\FirewallConfigReaderCS\FirewallConfigReaderCS\obj\Debug\FirewallConfigReaderCS.pdb
+C:\Users\jfosse\Documents\FunScripts\FirewallConfigReaderCS\FirewallConfigReaderCS\obj\Debug\FirewallConfigReaderCS.csprojResolveAssemblyReference.cache

@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E52DC396-DE26-4DA1-9878-960F3ABB7B5F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FirewallConfigReaderCS</RootNamespace>
+    <AssemblyName>FirewallConfigReaderCS</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConfigProcessor.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SampleConfigs\jim1.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2810%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2811%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2812%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2813%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2814%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2815%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2816%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2817%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2818%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2819%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %282%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2820%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2821%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %2822%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %283%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %284%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %285%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %286%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %287%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %288%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy %289%29.txt" />
+    <Content Include="SampleConfigs\jim2 - Copy.txt" />
+    <Content Include="SampleConfigs\jim2.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>echo Current Directory: %25cd%25
+
+set configsDirectory=$(TargetDir)Configs
+
+if not exist %25configsDirectory%25 md %25configsDirectory%25
+
+xcopy $(ProjectDir)SampleConfigs\*.txt %25configsDirectory%25 /y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
